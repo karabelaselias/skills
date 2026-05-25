@@ -11,8 +11,8 @@ agent can continue the work. Save it to a path produced by
 `mktemp -t handoff-XXXXXX.md` and read the empty file path before writing
 to it.
 
-If the user passed arguments, treat them as the next session focus and
-tailor the handoff accordingly.
+If the user passed arguments, treat them as the next session focus and tailor the handoff accordingly. 
+Redact any sensitive information, such as API keys, passwords, or personally identifiable information.
 
 ## Context discovery
 
