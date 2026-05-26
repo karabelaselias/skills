@@ -7,6 +7,8 @@ description: Find codebase-native improvement opportunities in existing scientif
 
 Surface improvement opportunities that make an existing scientific C/C++ codebase safer, easier to verify, and more maintainable while preserving local style, numerical semantics, data layout, and build reality.
 
+This skill is a review and handoff rotary. It can prepare candidate briefs, implementation slices, and verification plans, but it does not replace Haft for problem framing, decisions, evidence, or WorkCommissions. Preserve uncertainty as uncertainty.
+
 The original deepening vocabulary is still useful: **module**, **interface**, **implementation**, **depth**, **seam**, **adapter**, **leverage**, and **locality**. Use it consistently; see [LANGUAGE.md](LANGUAGE.md). But do not treat "deepening" as the automatic goal. In scientific code, explicit loops, flat data, and simple functions are often the right shape.
 
 ## Reference Map
@@ -14,6 +16,7 @@ The original deepening vocabulary is still useful: **module**, **interface**, **
 - Read [SCIENTIFIC_CPP.md](SCIENTIFIC_CPP.md) for the scientific/HPC reconnaissance checklist, Makefile and `compile_commands.json` defaults, hot-path caveats, and external research anchors.
 - Read [DEEPENING.md](DEEPENING.md) only when a candidate genuinely involves module depth, seam choice, or interface/test-surface design.
 - Read [INTERFACE-DESIGN.md](INTERFACE-DESIGN.md) when the user chooses a candidate and wants alternative interface designs compared.
+- Read [HTML-REPORT.md](HTML-REPORT.md) only when the user explicitly asks for a visual report artifact.
 
 ## Process
 
@@ -21,7 +24,7 @@ The original deepening vocabulary is still useful: **module**, **interface**, **
 
 Repo-local instructions override this skill. Read `AGENTS.md`, `.haft/`, `CONTRIBUTING`, architecture docs, local style notes, and the user's task framing before applying defaults.
 
-In haft projects, check active decisions before proposing changes. If a candidate contradicts a live decision, drop it or surface the decision ID and frame it as a reopening question.
+In haft projects, check active problems, decisions, notes, and WorkCommission constraints before proposing changes. If a candidate contradicts a live decision, drop it or surface the decision ID and frame it as a reopening question. If a WorkCommission is active, preserve its `commission_id`, `allowed_paths`, base/current head, scope, and open evidence gaps exactly; do not widen scope or treat this skill's recommendation as acceptance.
 
 ### 2. Produce A Codebase Fit Brief
 
@@ -59,7 +62,7 @@ Then apply the original depth/deletion-test lens. A module is worth deepening on
 
 ### 4. Present Candidates
 
-Use a numbered list. For each candidate include:
+Use a numbered list. For each candidate include these exact field labels so the output can be handed off without interpretation:
 
 - **Files** - exact files/modules involved.
 - **Problem** - concrete friction observed in this codebase.
@@ -69,6 +72,7 @@ Use a numbered list. For each candidate include:
 - **Safety/correctness gain** - what risk becomes visible, typed, tested, or removed.
 - **Performance/build risk** - layout, allocation, inlining, vectorization, compile time, link order, ABI, or rebuild impact.
 - **Evidence** - repo-local facts, linked decisions, tests/benchmarks/profilers/sanitizers, and any external references used.
+- **Decision boundary** - what is safe as a mechanical/tactical change, what needs user choice or Haft, and what remains unknown.
 - **Ceremony level** - `note-level`, `tactical`, `standard`, or `deep`.
 
 Do not propose final interfaces immediately. Ask which candidate to explore unless the user explicitly asks for implementation.
@@ -78,3 +82,5 @@ Do not propose final interfaces immediately. Ask which candidate to explore unle
 For note-level/tactical work, sketch the minimal patch and verification command. For standard/deep work, use haft or the inline decision framework before changing public interfaces, memory layout, ABI, or solver contracts.
 
 The user owns domain-critical decisions: numerical model, acceptable tolerance, performance budget, and physical meaning. Do not silently decide those.
+
+If producing a handoff, include the raw repo evidence, linked Haft refs, exact paths, proposed verification commands, and unresolved questions. Do not convert unresolved questions into conclusions just to make the handoff look complete.

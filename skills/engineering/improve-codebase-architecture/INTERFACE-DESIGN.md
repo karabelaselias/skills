@@ -8,9 +8,9 @@ There are two paths: the **haft-native path** (preferred when the project uses h
 
 ## Path A — Haft-native (preferred when haft is present)
 
-Haft already has a comparison protocol designed exactly for this kind of decision: `/h-frame → /h-char → /h-explore → /h-compare → /h-decide`. Use it. Don't reinvent the comparison machinery.
+Haft already has a comparison protocol designed for this kind of decision: `/h-frame → /h-char → /h-explore → /h-compare → /h-decide`. Use it when the user wants a persisted decision trail. Do not reinvent the comparison machinery or write a decision contract from this skill alone.
 
-The skill's job is to prepare the brief; haft owns the structured comparison.
+The skill's job is to prepare the brief and raw inputs; Haft owns the structured comparison, evidence state, and decision contract.
 
 ### 1. Frame the problem space
 
@@ -21,6 +21,8 @@ Write a problem-frame brief for the chosen candidate covering:
 - **Dependency category** — in-process / local-substitutable / remote-owned / true-external (see [DEEPENING.md](DEEPENING.md)).
 - **Acceptance** — what "solved" looks like measurably (callers reduced from N to M, this test now expressible at the interface, drift on these files resolves).
 - **Reversibility** — tactical / standard / deep.
+- **Linked refs** — active decisions, problems, notes, WorkCommissions, or none found.
+- **Uncertainty** — missing compile flags, unverified performance budget, unclear numerical tolerance, absent host evidence, stale decisions.
 - **A rough illustrative sketch** — not a proposal, just a way to make the constraints concrete.
 
 Show the brief to the user.
@@ -52,7 +54,7 @@ Each variant should carry its **weakest link** (what bounds its quality — e.g.
 
 ### 3. Cross-project precedents
 
-Before or during exploration, call `haft_query(action="similar", ...)` for the problem area. Past interface decisions in this language (CL2) or others (CL1) often surface a variant the team would otherwise miss. Include the strongest precedents in the brief, tagged with their congruence level so the user can weigh transferability.
+Before or during exploration, search Haft for similar decisions using the project's available `h-*` or `haft` tooling. Past interface decisions in this language (CL2) or others (CL1) can surface a variant the team would otherwise miss. Include only source-backed precedents in the brief, tagged with their congruence level so the user can weigh transferability. If the tooling is unavailable, say so; do not fabricate precedents.
 
 ### 4. The skill's role at each phase
 
@@ -60,9 +62,9 @@ Before or during exploration, call `haft_query(action="similar", ...)` for the p
 - **Characterize** — propose dimensions; the user adjusts.
 - **Explore** — propose variant directions; let `/h-explore` generate them. If your harness has parallel sub-agents, use them for variant generation. Otherwise, generate sequentially. Either way, the variants get persisted by `/h-explore`.
 - **Compare** — present each variant in prose with its weakest link, then let `/h-compare` produce the Pareto computation and parity check.
-- **Decide** — out of scope. The user decides.
+- **Decide** — out of scope. The user decides; Haft records the contract.
 
-Be opinionated in the prose: name your favourite and why. The user wants a strong read, not a menu. The Transformer Mandate still applies — the user chooses, but they choose better when they know what you'd pick.
+Be opinionated in the prose: name your recommendation and why. Label it as a recommendation, not a decision. The Transformer Mandate still applies: the user chooses, and Haft records the choice when persistence matters.
 
 ## Path B — Fallback (no haft)
 
@@ -90,4 +92,4 @@ Present designs sequentially so the user can absorb each, then compare them in p
 
 After comparing, give your own recommendation: which design you think is strongest and why. If elements from different designs would combine well, propose a hybrid. Be opinionated.
 
-The user chooses. The skill stops there — implementation is the user's call.
+The user chooses. The skill stops there unless the user explicitly asks for implementation. If implementation follows, preserve the chosen decision refs, scope, and unresolved risks in the handoff.
